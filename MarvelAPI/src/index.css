@@ -1,32 +1,110 @@
-:root {
+/* /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color: rgba(255, 255, 255, 0.87);
-  background-image: url("https://cdn.britannica.com/36/241736-050-D40F2AEC/Abstract-cryptocurrency-with-gold-bitcoin-background.jpg");
+  background-color: lightblue;
+  /*background-image: url("https://cdn.britannica.com/36/241736-050-D40F2AEC/Abstract-cryptocurrency-with-gold-bitcoin-background.jpg");
   /* Replace 'https://example.com/your-image.jpg' with the URL of your image */
 
   /* Choose one of the following background size properties: */
 
-  background-size: contain;
+  /*background-size: contain;
   /* background-size: auto; */
   /* background-size: 100% 100%; */
 
-  background-repeat: repeat-y
-}
+  /*background-repeat: repeat-y
+}  */
 
 
 
-body {
+
+
+/* body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
+} */
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+p{
+  font-size: 1.6rem;
+  color: white;
+}
+
+h1{
+  font-size: 6rem;
+}
+
+.app{
+  width: 50%;
+  height: 100vh;
+  position: relative;
+  background-color: rgb(77, 114, 184);
+  color: aliceblue;
+}
+
+.app::before{
+  content: '';
+  background: url('./assets/sunset.jpg') no-repeat center center/cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  /*z-index: -1;*/
+}
+
+.container{
+  max-width: 500px;
+  height: 600px;
+  margin: auto;
+  padding: 0 1rem;
+  top: 20%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.app .top{
+  width: 50%;
+  margin: 1rem auto;
+}
+
+.app .description {
+  position: relative;
+  right: -125%;
+  transform-origin: 0 0;
+  transform: rotate(270deg);
+}
+
+.app .bottom{
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255, .3);
+
+}
+
+.bold{
+  font-weight: 800;
 }

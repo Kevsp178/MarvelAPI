@@ -6,10 +6,12 @@ function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
+  const [dateInput, setDateInput] = useState(""); // State for date input
+  const [temperatureRangeInput, setTemperatureRangeInput] = useState([30, 90]);
 
   const searchLocation = (event) => {
     if (event.key === "Enter") {
-      const url = `https://api.weatherbit.io/v2.0/history/daily?postal_code=27601&city=${location}&start_date=2024-03-10&end_date=2024-03-20&units=imperial&key=f88cd683b08c43f6b114fa83ec1375f9`;
+      const url = `https://api.weatherbit.io/v2.0/history/daily?postal_code=27601&city=${location}&start_date=2024-03-10&end_date=2024-03-21&units=imperial&key=f88cd683b08c43f6b114fa83ec1375f9`;
 
       setLoading(true);
 
@@ -30,6 +32,37 @@ function App() {
     }
   };
 
+  const filterInfo = () => {
+    let filteredData = [...data.data]; // Make a copy of the data to avoid mutating the original state
+
+    // Filter data based on date input
+    if (dateInput) {
+      filteredData = filteredData.filter(
+        (dayData) => dayData.datetime === dateInput
+      );
+    }
+
+    // Filter data based on temperature range input
+    if (temperatureRangeInput) {
+      filteredData = filteredData.filter(
+        (dayData) =>
+          dayData.min_temp >= temperatureRangeInput[0] &&
+          dayData.max_temp <= temperatureRangeInput[1]
+      );
+    }
+
+    // Update the state with the filtered data
+    setData({ ...data, data: filteredData });
+    setDateInput(" ");
+  };
+
+  // Use this function when the user presses Enter or clicks a button to apply the filter
+  const applyFilter = (event) => {
+    if (event.key === "Enter" || event.type === "click") {
+      filterInfo();
+    }
+  };
+
   return (
     <div className='app'>
       <div className='container'>
@@ -38,8 +71,28 @@ function App() {
             value={location}
             onChange={(event) => setLocation(event.target.value)}
             placeholder='Enter Location'
-            onKeyPress={searchLocation}
+            onKeyDown={searchLocation}
             type='text'
+          />
+        </div>
+        <div className='filters'>
+          <input
+            placeholder='Enter Date'
+            type='text'
+            value={dateInput}
+            onChange={(event) => setDateInput(event.target.value)}
+            onKeyDown={applyFilter}
+          />
+          <button onClick={applyFilter}>Apply Filter</button>
+          <input
+            name='Temperature'
+            type='range'
+            min='30'
+            max='90'
+            value={temperatureRangeInput[1]}
+            onChange={(event) =>
+              setTemperatureRangeInput([30, parseInt(event.target.value)])
+            }
           />
         </div>
         <div className='top'>

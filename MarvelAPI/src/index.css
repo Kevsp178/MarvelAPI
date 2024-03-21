@@ -1,33 +1,3 @@
-/* /* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color: rgba(255, 255, 255, 0.87);
-  background-color: lightblue;
-  /*background-image: url("https://cdn.britannica.com/36/241736-050-D40F2AEC/Abstract-cryptocurrency-with-gold-bitcoin-background.jpg");
-  /* Replace 'https://example.com/your-image.jpg' with the URL of your image */
-
-  /* Choose one of the following background size properties: */
-
-  /*background-size: contain;
-  /* background-size: auto; */
-  /* background-size: 100% 100%; */
-
-  /*background-repeat: repeat-y
-}  */
-
-
-
-
-
-/* body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-} */
 
 h1 {
   font-size: 3.2em;
@@ -42,7 +12,7 @@ h1 {
 
 p{
   font-size: 1.6rem;
-  color: white;
+  color: rgb(7, 7, 7);
 }
 
 h1{
@@ -50,11 +20,11 @@ h1{
 }
 
 .app{
-  width: 50%;
-  height: 100vh;
+  width: 100%;
+  height: 200vh;
   position: relative;
   background-color: rgb(77, 114, 184);
-  color: aliceblue;
+  color: rgb(12, 12, 12);
 }
 
 .app::before{
@@ -69,7 +39,7 @@ h1{
 }
 
 .container{
-  max-width: 500px;
+  max-width: 1000px;
   height: 600px;
   margin: auto;
   padding: 0 1rem;
@@ -84,14 +54,18 @@ h1{
 .app .top{
   width: 50%;
   margin: 1rem auto;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255, .3);
+  flex-direction: column;
 }
 
-.app .description {
-  position: relative;
-  right: -125%;
-  transform-origin: 0 0;
-  transform: rotate(270deg);
-}
+
 
 .app .bottom{
   display: flex;
@@ -102,11 +76,34 @@ h1{
   padding: 1rem;
   border-radius: 12px;
   background-color: rgb(255, 255, 255, .3);
+  flex-direction: column;
 
 }
 
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.daily-info{
+  display:flex;
+  justify-content:space-between;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  padding: 2rem;
+  
+}
+
+
+
 .bold{
-  font-weight: 800;
+  font-weight: 500;
 }
 
 .app.search{
@@ -125,3 +122,4 @@ h1{
 ::placeholder{
   color: antiquewhite;
 }
+

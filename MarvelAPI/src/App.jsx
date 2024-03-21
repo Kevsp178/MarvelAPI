@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-import MarvelInfo from "./Components/Marvel";
 
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const searchLocation = (event) => {
     if (event.key === "Enter") {
-      const url = `https://api.weatherbit.io/v2.0/history/daily?postal_code=27601&city=${location}&start_date=2024-03-16&end_date=2024-03-17&key=f88cd683b08c43f6b114fa83ec1375f9`;
+      const url = `https://api.weatherbit.io/v2.0/history/daily?postal_code=27601&city=${location}&start_date=2024-03-10&end_date=2024-03-20&units=imperial&key=f88cd683b08c43f6b114fa83ec1375f9`;
+
+      setLoading(true);
+
       axios
         .get(url)
         .then((response) => {
@@ -18,8 +21,12 @@ function App() {
         })
         .catch((error) => {
           console.error("Error fetching weather data:", error);
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      setLocation(""); // Clear the input field after making the API call
+
+      setLocation("");
     }
   };
 
@@ -37,29 +44,33 @@ function App() {
         </div>
         <div className='top'>
           <div className='location'>
-            <p>Miami</p>
+            <p>{data.city_name}</p>
           </div>
           <div className='temp'>
-            <h1>60F </h1>
-          </div>
-          <div className='description'>
-            <p>Clouds</p>
+            {data.data ? <p>{data.data[0].temp.toFixed()} F</p> : null}
           </div>
         </div>
         <div className='bottom'>
-          <div className='feels'>
-            <p>Feels like</p>
-            <p className='bold'>65F</p>
-          </div>
-          <div className='humidity'>
-            <p>Humidity</p>
-            <p className='bold'>20%</p>
-          </div>
-          <div className='wind'>
+          <div className='header'>
+            <p>Date</p>
+            <p>Min Temp</p>
+            <p>Max Temp</p>
             <p>Wind Speed</p>
-            <p className='bold'>12 MPH</p>
+            <p>Total Rain</p>
           </div>
+          {data.data
+            ? data.data.map((dayData, index) => (
+                <div key={index} className='daily-info'>
+                  <p>{dayData.datetime}</p>
+                  <p>{dayData.min_temp.toFixed()} F</p>
+                  <p>{dayData.max_temp.toFixed()} F</p>
+                  <p>{dayData.wind_spd} MPH</p>
+                  <p>{dayData.precip} In</p>
+                </div>
+              ))
+            : null}
         </div>
+        {loading && <p>Loading...</p>}
       </div>
     </div>
   );

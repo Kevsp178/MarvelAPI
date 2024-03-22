@@ -23,6 +23,7 @@ function App() {
         })
         .catch((error) => {
           console.error("Error fetching weather data:", error);
+          setLoading(false); // Stop loading if there's an error
         })
         .finally(() => {
           setLoading(false);
@@ -43,11 +44,9 @@ function App() {
     }
 
     // Filter data based on temperature range input
-    if (temperatureRangeInput) {
+    if (temperatureRangeInput[1]) {
       filteredData = filteredData.filter(
-        (dayData) =>
-          dayData.min_temp >= temperatureRangeInput[0] &&
-          dayData.max_temp <= temperatureRangeInput[1]
+        (dayData) => dayData.max_temp >= temperatureRangeInput[1]
       );
     }
 
@@ -83,24 +82,28 @@ function App() {
             onChange={(event) => setDateInput(event.target.value)}
             onKeyDown={applyFilter}
           />
-          <button onClick={applyFilter}>Apply Filter</button>
+
           <input
-            name='Temperature'
-            type='range'
-            min='30'
-            max='90'
+            placeholder='Enter Max Temperature'
+            type='number'
             value={temperatureRangeInput[1]}
-            onChange={(event) =>
-              setTemperatureRangeInput([30, parseInt(event.target.value)])
-            }
+            onChange={(event) => {
+              setTemperatureRangeInput([30, parseInt(event.target.value)]);
+            }}
           />
+
+          <button onClick={applyFilter}>Apply Filter</button>
         </div>
         <div className='top'>
           <div className='location'>
             <p>{data.city_name}</p>
           </div>
           <div className='temp'>
-            {data.data ? <p>{data.data[0].temp.toFixed()} F</p> : null}
+            {data.data && data.data.length > 0 ? (
+              <p>{data.data[0].temp.toFixed()} F</p>
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         </div>
         <div className='bottom'>

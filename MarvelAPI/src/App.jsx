@@ -11,7 +11,7 @@ function App() {
 
   const searchLocation = (event) => {
     if (event.key === "Enter") {
-      const url = `https://api.weatherbit.io/v2.0/history/daily?postal_code=27601&city=${location}&start_date=2024-03-10&end_date=2024-03-20&units=imperial&key=f88cd683b08c43f6b114fa83ec1375f9`;
+      const url = `https://api.weatherbit.io/v2.0/history/daily?postal_code=27601&city=${location}&start_date=2024-03-30&end_date=2024-04-07&units=imperial&key=f88cd683b08c43f6b114fa83ec1375f9`;
 
       setLoading(true);
 

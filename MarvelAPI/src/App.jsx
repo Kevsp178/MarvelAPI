@@ -22,7 +22,7 @@ function App() {
           console.log(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching weather data:", error);
+          console.error("Error fetching weatdher data:", error);
         })
         .finally(() => {
           setLoading(false);

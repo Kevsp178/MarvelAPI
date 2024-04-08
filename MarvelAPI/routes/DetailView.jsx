@@ -3,7 +3,7 @@ import React from "react";
 const DetailView = () => {
   return (
     <div>
-      <WDetail />
+      <WDetail city_Name={city_Name} />
     </div>
   );
 };

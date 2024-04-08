@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
+import { Link } from "react-router-dom";
+import Chart from "chart.js/auto";
 
 function App() {
   const [data, setData] = useState({});
@@ -22,7 +24,7 @@ function App() {
           console.log(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching weatdher data:", error);
+          console.error("Error fetching weather data:", error);
         })
         .finally(() => {
           setLoading(false);
@@ -33,21 +35,18 @@ function App() {
   };
 
   const filterInfo = () => {
-    // Check if data.data is iterable (an array)
     if (!Array.isArray(data.data)) {
-      return; // Exit early if data.data is not iterable
+      return;
     }
 
-    let filteredData = [...data.data]; // Make a copy of the data to avoid mutating the original state
+    let filteredData = [...data.data];
 
-    // Filter data based on date input
     if (dateInput) {
       filteredData = filteredData.filter((dayData) =>
         dayData.datetime.includes(dateInput)
       );
     }
 
-    // Filter data based on temperature range input
     if (temperatureRangeInput) {
       filteredData = filteredData.filter(
         (dayData) =>
@@ -56,12 +55,54 @@ function App() {
       );
     }
 
-    // Update the state with the filtered data
     setData({ ...data, data: filteredData });
   };
 
   const applyFilter = () => {
     filterInfo();
+  };
+
+  const TemperatureChart = ({ temperatures }) => {
+    useEffect(() => {
+      const ctx = document.getElementById("temperature-chart");
+      let chartInstance = null;
+
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      chartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: temperatures.map((data, index) => index + 1),
+          datasets: [
+            {
+              label: "Temperature Range",
+              data: temperatures.map(
+                (data) => (data.max_temp + data.min_temp) / 2
+              ),
+              borderColor: "rgb(75, 192, 192)",
+              tension: 0.1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      return () => {
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+      };
+    }, [temperatures]);
+
+    return <canvas id='temperature-chart' />;
   };
 
   return (
@@ -97,7 +138,9 @@ function App() {
         <div className='top'>
           {data.city_name && (
             <div className='location'>
-              <p>{data.city_name}</p>
+              <Link to={`/Components/WDetail${data.city_name}`}>
+                {data.city_name}
+              </Link>
             </div>
           )}
           {data.data && data.data.length > 0 && (
@@ -125,7 +168,11 @@ function App() {
                 </div>
               ))
             : null}
+          <div>
+            <TemperatureChart temperatures={data.data || []} />
+          </div>
         </div>
+
         {loading && <p>Loading...</p>}
       </div>
     </div>
